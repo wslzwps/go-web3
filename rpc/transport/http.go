@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/wslzwps/go-web3/rpc/codec"
+	"github.com/wslzwps/go-web3/rpc/entity"
 	"github.com/valyala/fasthttp"
 )
 
@@ -53,7 +53,7 @@ func (h *HTTP) Close() error {
 }
 
 func (h *HTTP) Call(method string, out interface{}, params ...interface{}) error {
-	request := codec.Request{
+	request := entity.Request{
 		Method:  method,
 		Version: "2.0",
 	}
@@ -85,7 +85,7 @@ func (h *HTTP) Call(method string, out interface{}, params ...interface{}) error
 		return err
 	}
 
-	var response codec.Response
+	var response entity.Response
 	if err := json.Unmarshal(res.Body(), &response); err != nil {
 		return fmt.Errorf("json unmarshal response body %s err %s", res.Body(), err)
 	}

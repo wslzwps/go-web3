@@ -8,7 +8,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/wslzwps/go-web3/rpc/codec"
+	"github.com/wslzwps/go-web3/rpc/entity"
 	"github.com/gorilla/websocket"
 )
 
@@ -91,7 +91,7 @@ func (s *stream) listen() {
 			return
 		}
 
-		var resp codec.Response
+		var resp entity.Response
 		if err = json.Unmarshal(buf, &resp); err != nil {
 			return
 		}
@@ -99,7 +99,7 @@ func (s *stream) listen() {
 		if resp.ID != 0 {
 			go s.handleMsg(resp)
 		} else {
-			var respSub codec.Request
+			var respSub entity.Request
 			if err = json.Unmarshal(buf, &respSub); err != nil {
 				return
 			}
@@ -111,8 +111,8 @@ func (s *stream) listen() {
 	}
 }
 
-func (s *stream) handleSubscription(response codec.Request) {
-	var sub codec.Subscription
+func (s *stream) handleSubscription(response entity.Request) {
+	var sub entity.Subscription
 	if err := json.Unmarshal(response.Params, &sub); err != nil {
 		panic(any(err))
 	}
@@ -128,7 +128,7 @@ func (s *stream) handleSubscription(response codec.Request) {
 	callback(sub.Result)
 }
 
-func (s *stream) handleMsg(response codec.Response) {
+func (s *stream) handleMsg(response entity.Response) {
 	s.handlerLock.Lock()
 	callback, ok := s.handler[response.ID]
 	if !ok {
@@ -172,7 +172,7 @@ func (s *stream) setHandler(id uint64, ack chan *ackMessage) {
 
 func (s *stream) Call(method string, out interface{}, params ...interface{}) error {
 	seq := s.incSeq()
-	request := codec.Request{
+	request := entity.Request{
 		ID:     seq,
 		Method: method,
 	}
