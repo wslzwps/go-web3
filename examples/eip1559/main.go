@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/chenzhijie/go-web3"
-	"github.com/chenzhijie/go-web3/utils"
+	"github.com/wslzwps/go-web3"
+	"github.com/wslzwps/go-web3/utils"
 )
 
 func main() {
@@ -13,18 +13,18 @@ func main() {
 	var rpcProvider = "https://rpc.flashbots.net"
 	web3, err := web3.NewWeb3(rpcProvider)
 	if err != nil {
-		panic(err)
+		panic(any(err))
 	}
 
 	web3.Eth.SetAccount(os.Getenv("eth_privateKey"))
 	blockNumber, err := web3.Eth.GetBlockNumber()
 	if err != nil {
-		panic(err)
+		panic(any(err))
 	}
 	fmt.Println("Current block number: ", blockNumber)
 	fee, err := web3.Eth.EstimateFee()
 	if err != nil {
-		panic(err)
+		panic(any(err))
 	}
 	util := utils.Utils{}
 	fmt.Printf("base fee %v, %.3f Gwei\n", fee.BaseFee, util.FromWeiWithUnit(fee.BaseFee, utils.EtherUnitGWei))
@@ -34,7 +34,7 @@ func main() {
 	fmt.Println("current account ", web3.Eth.Address())
 	nonce, err := web3.Eth.GetNonce(web3.Eth.Address(), nil)
 	if err != nil {
-		panic(err)
+		panic(any(err))
 	}
 	receipt, err := web3.Eth.SyncSendEIP1559RawTransaction(
 		web3.Eth.Address(),
@@ -46,7 +46,7 @@ func main() {
 		nil,
 	)
 	if err != nil {
-		panic(err)
+		panic(any(err))
 	}
 	fmt.Printf("eip 1559 tx %v\n", receipt)
 

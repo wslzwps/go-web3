@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/chenzhijie/go-web3"
+	"github.com/wslzwps/go-web3"
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
@@ -16,12 +16,12 @@ func main() {
 	var rpcProvider = "https://matic-testnet-archive-rpc.bwarelabs.com"
 	web3, err := web3.NewWeb3(rpcProvider)
 	if err != nil {
-		panic(err)
+		panic(any(err))
 	}
 	web3.Eth.SetChainId(chainId)
 	blockNumber, err := web3.Eth.GetBlockNumber()
 	if err != nil {
-		panic(err)
+		panic(any(err))
 	}
 	fmt.Println("Current block number: ", blockNumber)
 
@@ -32,15 +32,15 @@ func main() {
 	}
 	// setup your privateKey
 	if err := web3.Eth.SetAccount(privateKey); err != nil {
-		panic(err)
+		panic(any(err))
 	}
 	privateKeyData, err := hex.DecodeString(privateKey)
 	if err != nil {
-		panic(err)
+		panic(any(err))
 	}
 	ecdsaPrivateKey, err := crypto.ToECDSA(privateKeyData)
 	if err != nil {
-		panic(err)
+		panic(any(err))
 	}
 
 	addr := crypto.PubkeyToAddress(ecdsaPrivateKey.PublicKey)
@@ -48,12 +48,12 @@ func main() {
 
 	maticBalance, err := web3.Eth.GetBalance(addr, nil)
 	if err != nil {
-		panic(err)
+		panic(any(err))
 	}
 	fmt.Printf("MATIC balance %v\n", maticBalance)
 	nonce, err := web3.Eth.GetNonce(web3.Eth.Address(), nil)
 	if err != nil {
-		panic(err)
+		panic(any(err))
 	}
 	tx, err := web3.Eth.SyncSendEIP1559RawTransaction(
 		addr,
@@ -65,7 +65,7 @@ func main() {
 		nil,
 	)
 	if err != nil {
-		panic(err)
+		panic(any(err))
 	}
 	fmt.Printf("Send 0.1 MATIC to self tx %s\n", tx.TxHash)
 }

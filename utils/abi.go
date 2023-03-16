@@ -54,7 +54,7 @@ func (u *Utils) PackCode(signature string, args []string, params []interface{}) 
 	}
 	inputCode, err := u.EncodeParameters(args, params)
 	if err != nil {
-		panic(err)
+		panic(any(err))
 	}
 	code := append(methodSig, inputCode...)
 	return code

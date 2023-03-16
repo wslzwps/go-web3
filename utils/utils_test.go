@@ -124,7 +124,7 @@ func TestRoundNWei(t *testing.T) {
 	fmt.Printf(" %v\n", v)
 	ret, err := u.RoundNWei(v, 5)
 	if err != nil {
-		panic(err)
+		panic(any(err))
 	}
 	fmt.Printf("ret %v\n", ret)
 }

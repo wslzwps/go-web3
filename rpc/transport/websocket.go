@@ -8,7 +8,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/chenzhijie/go-web3/rpc/codec"
+	"github.com/wslzwps/go-web3/rpc/codec"
 	"github.com/gorilla/websocket"
 )
 
@@ -114,7 +114,7 @@ func (s *stream) listen() {
 func (s *stream) handleSubscription(response codec.Request) {
 	var sub codec.Subscription
 	if err := json.Unmarshal(response.Params, &sub); err != nil {
-		panic(err)
+		panic(any(err))
 	}
 
 	s.subsLock.Lock()

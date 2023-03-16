@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/chenzhijie/go-web3"
+	"github.com/wslzwps/go-web3"
 )
 
 func main() {
@@ -13,11 +13,11 @@ func main() {
 	var rpcProvider = "https://rpc.flashbots.net"
 	web3, err := web3.NewWeb3(rpcProvider)
 	if err != nil {
-		panic(err)
+		panic(any(err))
 	}
 	blockNumber, err := web3.Eth.GetBlockNumber()
 	if err != nil {
-		panic(err)
+		panic(any(err))
 	}
 	fmt.Println("Current block number: ", blockNumber)
 }

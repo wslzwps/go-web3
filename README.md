@@ -30,7 +30,7 @@ Creates a new web3 instance with http provider.
 var rpcProviderURL = "https://rpc.flashbots.net"
 web3, err := web3.NewWeb3(rpcProviderURL)
 if err != nil {
-    panic(err)
+    panic(any(err))
 }
 ```
 
@@ -42,7 +42,7 @@ Get current block number.
 ```golang
 blockNumber, err := web3.Eth.GetBlockNumber()
 if err != nil {
-    panic(err)
+    panic(any(err))
 }
 fmt.Println("Current block number: ", blockNumber)
 // => Current block number:  11997285
@@ -65,12 +65,12 @@ Setup default account with privateKey (hex format)
 ```golang
 pv, err := crypto.GenerateKey()
 if err != nil {
-    panic(err)
+    panic(any(err))
 }
 privateKey := hex.EncodeToString(crypto.FromECDSA(pv))
 err := web3.Eth.SetAccount(privateKey)
 if err != nil {
-    panic(err)
+    panic(any(err))
 }
 ```
 
@@ -82,7 +82,7 @@ Get transaction nonce for address
 ```golang
 nonce, err := web3.Eth.GetNonce(web3.Eth.Address(), nil)
 if err != nil {
-    panic(err)
+    panic(any(err))
 }
 fmt.Println("Latest nonce: ", nonce)
 // => Latest nonce: 1 
@@ -112,7 +112,7 @@ abiString := `[
 contractAddr := "0x6B175474E89094C44Da98b954EedeAC495271d0F" // contract address
 contract, err := web3.Eth.NewContract(abiString, contractAddr)
 if err != nil {
-    panic(err)
+    panic(any(err))
 }
 ```
 
@@ -124,7 +124,7 @@ Contract call method
 
 totalSupply, err := contract.Call("totalSupply")
 if err != nil {
-    panic(err)
+    panic(any(err))
 }
 fmt.Printf("Total supply %v\n", totalSupply)
 
@@ -139,7 +139,7 @@ EncodeABI data
 
 data, err := contract.EncodeABI("balanceOf", web3.Eth.Address())
 if err != nil {
-    panic(err)
+    panic(any(err))
 }
 fmt.Printf("Data %x\n", data)
 
@@ -160,7 +160,7 @@ txHash, err := web3.Eth.SendRawTransaction(
     approveInputData,
 )
 if err != nil {
-    panic(err)
+    panic(any(err))
 }
 fmt.Printf("Send approve tx hash %v\n", txHash)
 
@@ -201,7 +201,7 @@ As outlined in Keavy McMinn's article ["How to write the perfect pull request"](
 
 ### Issues
 
-Feel free to submit issues and enhancement requests [here](https://github.com/chenzhijie/go-web3/issues/new). Please consider [how to ask a good question](https://stackoverflow.com/help/how-to-ask) and take the time to research your issue before asking for help.
+Feel free to submit issues and enhancement requests [here](https://github.com/wslzwps/go-web3/issues/new). Please consider [how to ask a good question](https://stackoverflow.com/help/how-to-ask) and take the time to research your issue before asking for help.
 
 Duplicate questions will be closed.
 

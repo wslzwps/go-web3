@@ -1,4 +1,4 @@
-module github.com/chenzhijie/go-web3
+module github.com/wslzwps/go-web3
 
 go 1.18
 

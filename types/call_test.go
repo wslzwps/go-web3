@@ -12,7 +12,7 @@ func TestInputData(t *testing.T) {
 
 	data, err := hex.DecodeString("18160ddd")
 	if err != nil {
-		panic(err)
+		panic(any(err))
 	}
 
 	call := &CallMsg{
@@ -23,12 +23,12 @@ func TestInputData(t *testing.T) {
 
 	ret, err := json.Marshal(call)
 	if err != nil {
-		panic(err)
+		panic(any(err))
 	}
 
 	// out := make(InputData, 4)
 	// if err := json.Unmarshal(ret, &out); err != nil {
-	// 	panic(err)
+	// 	panic(any(err))
 	// }
 	fmt.Printf("ret %s\n", ret)
 
@@ -40,7 +40,7 @@ func BenchmarkTestCallMsgMarshal(b *testing.B) {
 
 	data, err := hex.DecodeString("18160ddd")
 	if err != nil {
-		panic(err)
+		panic(any(err))
 	}
 
 	call := &CallMsg{
@@ -52,7 +52,7 @@ func BenchmarkTestCallMsgMarshal(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		_, err = json.Marshal(call)
 		if err != nil {
-			panic(err)
+			panic(any(err))
 		}
 	}
 
